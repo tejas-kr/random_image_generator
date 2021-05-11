@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}RIG Home{% endblock %}
+
+{% block content %}
+
+<div class="heading" style="padding: 12px; margin: 12px;" > 
+    <center><h1 class="display-1">random image generator</h1></center>
+</div>
+
+<div class="input-group mb-3">
+    <span class="input-group-text" id="inputGroup-sizing-default">Search Term</span>
+    
+    <input type="text" class="form-control" id="search_term" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="eg. nature,water,sky">
+    
+    <select class="form-select form-select-sm dropdown-toggle" id="resolution" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <!-- <option selected>Open this select menu</option> -->
+        
+        {% for res in resolutions %}
+
+        {% if res == '1280x720' %}
+        <option value="{{res}}" selected>{{res}}</option>
+        {% else %}
+        <option value="{{res}}">{{res}}</option>
+        {% endif %}
+
+
+        {% endfor %}
+
+    </select>
+    
+    <button type="button" id="search_b" class="btn btn-primary">Search</button>
+</div>
+
+<div class="image-panel-main">
+    <img src="https://source.unsplash.com/1600x900/?nature,water,sky" id="main_img" class="img-fluid" alt="...">
+</div>
+
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+jQuery.support.cors = true;
+
+    $('#search_b').click(function(e) {
+        e.preventDefault()
+
+        var search_term = $('#search_term').val()
+        var resolution = $('#resolution').val()
+        console.log(search_term)
+        console.log(resolution)
+
+        $('#main_img').attr('src', `https://source.unsplash.com/${resolution}/?${search_term}`)
+    })
+
+</script>
+{% endblock %}
